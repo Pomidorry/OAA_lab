@@ -23,6 +23,12 @@ def read():
             return 'exit', None, None
         if 'clear' in line:
             return 'clear', None, None
+        
+        '''
+            Test func
+        '''
+        if 'show' in line:
+            return 'show', None, None
     
     pattern = r'(\w+)\s+(\w+)\s*([^;]*)'
     match = re.match(pattern, ''.join(read_command))
@@ -38,9 +44,6 @@ def read():
 
     return command.lower() if command.lower() in commands else f'Command "{command}" is not defined', coll_name, param
     
-def search(collection_name, param):
-    print(Fore.GREEN + f'Search function')
-    print(Style.RESET_ALL, end='')
 
 def invalid_syntax():
     print(Fore.RED + 'Invalid syntax')
@@ -56,6 +59,8 @@ if __name__ == "__main__":
                 break
             case 'clear':
                 clear()
+            case 'show':
+                show_mycollections()
             case 'create':
                 if param == '':
                     create(coll_name)

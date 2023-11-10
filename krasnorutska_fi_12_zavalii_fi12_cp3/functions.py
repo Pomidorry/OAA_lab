@@ -2,39 +2,64 @@ from colorama import Fore, Style
 from forming_dict_of_words import *
 
 mycollections = {}
+inverted_indexes = {}
+
+def build_inverted_index(collection_name, documents):
+    inverted_index = {} if collection_name not in inverted_indexes else inverted_indexes[collection_name]
+    unique_words = sorted(list(set(documents.split())))
+    
+    doc_index = mycollections[collection_name].index(documents)
+
+    for word in unique_words:
+        if word in inverted_index:
+            inverted_index[word].append((doc_index+1, [index+1 for index, value in enumerate(documents.split()) if value == word]))
+        else:
+            inverted_index[word] = [(doc_index+1, [index+1 for index, value in enumerate(documents.split()) if value == word])]
+        
+    inverted_indexes[collection_name] = inverted_index
 
 def create(collection_name):
     if collection_name not in mycollections:
         mycollections[collection_name] = []
-        print(Fore.GREEN + f'Collection {collection_name} has been created')
+        print(Fore.GREEN + f'Collection "{collection_name}" has been created')
         print(Fore.GREEN + f'Number of collections: {len(mycollections)}')
-        print(Style.RESET_ALL, end='')
     else:
-        print(Fore.RED + 'Collection with that name already exists!')
-        print(Style.RESET_ALL, end='')
+        print(Fore.YELLOW + 'A collection with the same name already exists.')
+    print(Style.RESET_ALL, end='')
 
 def insert(collection_name, param):
     if collection_name in mycollections:
-        table=mycollections.get(collection_name)
+        table = mycollections.get(collection_name)
         table.append(param)
-        print(Fore.GREEN + f'Document has been added to {collection_name} {mycollections}')
+        build_inverted_index(collection_name, param)
+        print(Fore.GREEN + f'Document has been added to "{collection_name}"')
     else:
-        print(Fore.YELLOW + f'Document {collection_name} not found')
+        print(Fore.YELLOW + f'Collection "{collection_name}" not found.')
     print(Style.RESET_ALL, end='')
 
 def print_index(collection_name):
     if collection_name in mycollections:
-        inverted_index = build_inverted_index(collection_name, mycollections[collection_name])
-        print(f'Інвертований індекс для колекції "{collection_name}":')
-
-        for word, doc_positions in inverted_index.items():
-           print(f'"{word}":')
-           for doc_id, positions in doc_positions:
-              positions_str = ', '.join(map(str, positions))
-              print(f'  d{doc_id} -> [{positions_str}]')
+        print(f'Inverted Index for collection "{collection_name}":')
+        for word, indexes in inverted_indexes[collection_name].items():
+                print(f'"{word}"')
+                for elem in indexes:
+                    print(f'd{elem[0]} -> {elem[1]}')
+        print()
     else:
-        print(f'Колекція "{collection_name}" не знайдена в інвертованому індексі')
+        print(f'Collection "{collection_name}" not found.')
+    print(Style.RESET_ALL, end='')
+
+def search(collection_name, param):
+    print(Fore.GREEN + f'Search function')
     print(Style.RESET_ALL, end='')
 
 def clear():
     print('\033c')
+
+
+
+'''
+    Test func
+'''
+def show_mycollections():
+    print(mycollections)
