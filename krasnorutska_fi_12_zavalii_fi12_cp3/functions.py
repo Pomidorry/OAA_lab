@@ -39,14 +39,15 @@ def insert(collection_name, param):
 
 def print_index(collection_name):
     if collection_name in mycollections:
-        print(f'Inverted Index for collection "{collection_name}":')
+        print(Fore.GREEN + f'Inverted Index for collection "{collection_name}":')
+        print()
         for word, indexes in inverted_indexes[collection_name].items():
-                print(f'"{word}"')
+                print(f'"{word}":')
                 for elem in indexes:
                     print(f'd{elem[0]} -> {elem[1]}')
         print()
     else:
-        print(f'Collection "{collection_name}" not found.')
+        print(Fore.YELLOW + f'Collection "{collection_name}" not found.')
     print(Style.RESET_ALL, end='')
 
 def search(collection_name, param):
