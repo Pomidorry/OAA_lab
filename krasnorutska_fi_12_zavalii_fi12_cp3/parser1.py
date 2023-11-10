@@ -1,6 +1,7 @@
 import re
 from colorama import Fore, Style
 from forming_dict_of_words import *
+
 mycollections = {}
 commands = ['create', 'insert', 'print_index', 'search']
 
@@ -38,11 +39,14 @@ def read():
     
     
 def create(collection_name):
-    table=[]
-    mycollections[collection_name]=table
-    print(Fore.GREEN + f'Collection {collection_name} has been created')
-    print(Style.RESET_ALL, end='')
-    print(len(mycollections))
+    if collection_name not in mycollections:
+        mycollections[collection_name] = []
+        print(Fore.GREEN + f'Collection {collection_name} has been created')
+        print(Fore.GREEN + f'Number of collections: {len(mycollections)}')
+        print(Style.RESET_ALL, end='')
+    else:
+        print(Fore.RED + 'Collection with that name already exists!')
+        print(Style.RESET_ALL, end='')
 
 def insert(collection_name, param):
     if collection_name in mycollections:
@@ -66,6 +70,7 @@ def print_index(collection_name):
     else:
         print(f'Колекція "{collection_name}" не знайдена в інвертованому індексі')
     print(Style.RESET_ALL, end='')
+
 
 def search(collection_name, param):
     print(Fore.GREEN + f'Search function')
