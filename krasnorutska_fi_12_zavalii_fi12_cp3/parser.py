@@ -73,10 +73,7 @@ if __name__ == "__main__":
                 else:
                     invalid_syntax()
             case 'search':
-                if param != '':
-                    search(coll_name, param)
-                else:
-                    invalid_syntax()
+                search(coll_name, param)
             case _:
                 print(Fore.RED + f'{command}')
                 print(Style.RESET_ALL, end='')

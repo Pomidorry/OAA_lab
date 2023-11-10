@@ -31,7 +31,7 @@ def insert(collection_name, param):
         table = mycollections.get(collection_name)
         table.append(param)
         build_inverted_index(collection_name, param)
-        print(Fore.GREEN + f'Document has been added to "{collection_name}"')
+        print(Fore.GREEN + f'Document has been added to "{collection_name}" collection.')
     else:
         print(Fore.YELLOW + f'Collection "{collection_name}" not found.')
     print(Style.RESET_ALL, end='')
@@ -50,5 +50,5 @@ def print_index(collection_name):
     print(Style.RESET_ALL, end='')
 
 def search(collection_name, param):
-    print(Fore.GREEN + f'Search function')
+    print('List of available documents:', *mycollections[collection_name])
     print(Style.RESET_ALL, end='')
