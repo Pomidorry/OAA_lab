@@ -1,5 +1,4 @@
 from colorama import Fore, Style
-from forming_dict_of_words import *
 
 mycollections = {}
 inverted_indexes = {}
@@ -53,14 +52,3 @@ def print_index(collection_name):
 def search(collection_name, param):
     print(Fore.GREEN + f'Search function')
     print(Style.RESET_ALL, end='')
-
-def clear():
-    print('\033c')
-
-
-
-'''
-    Test func
-'''
-def show_mycollections():
-    print(mycollections)

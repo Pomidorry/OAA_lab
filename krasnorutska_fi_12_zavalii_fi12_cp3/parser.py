@@ -23,10 +23,6 @@ def read():
             return 'exit', None, None
         if 'clear' in line:
             return 'clear', None, None
-        
-        '''
-            Test func
-        '''
         if 'show' in line:
             return 'show', None, None
     
@@ -58,9 +54,9 @@ if __name__ == "__main__":
             case 'exit':
                 break
             case 'clear':
-                clear()
+                print('\033c')
             case 'show':
-                show_mycollections()
+                print(mycollections)
             case 'create':
                 if param == '':
                     create(coll_name)
