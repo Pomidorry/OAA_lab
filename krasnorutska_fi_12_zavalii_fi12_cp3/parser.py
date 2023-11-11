@@ -75,7 +75,7 @@ if __name__ == "__main__":
                 if param != '':
                     search(coll_name, param)
                 else:
-                    search_lite(coll_name, param)
+                    search_lite(coll_name)
             case _:
                 print(Fore.RED + f'{command}')
                 print(Style.RESET_ALL, end='')
