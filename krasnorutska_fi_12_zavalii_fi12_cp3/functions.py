@@ -1,3 +1,4 @@
+import re
 from colorama import Fore, Style
 
 mycollections = {}
@@ -21,9 +22,9 @@ def create(collection_name):
     if collection_name not in mycollections:
         mycollections[collection_name] = []
         print(Fore.GREEN + f'Collection "{collection_name}" has been created')
-        print(Fore.GREEN + f'Number of collections: {len(mycollections)}')
+        print(Fore.GREEN + f'Number of collections: {len(mycollections)}\n')
     else:
-        print(Fore.YELLOW + 'A collection with the same name already exists.')
+        print(Fore.YELLOW + 'A collection with the same name already exists. \n')
     print(Style.RESET_ALL, end='')
 
 def insert(collection_name, param):
@@ -31,15 +32,14 @@ def insert(collection_name, param):
         table = mycollections.get(collection_name)
         table.append(param)
         build_inverted_index(collection_name, param)
-        print(Fore.GREEN + f'Document has been added to "{collection_name}" collection.')
+        print(Fore.GREEN + f'Document has been added to "{collection_name}" collection.\n')
     else:
-        print(Fore.YELLOW + f'Collection "{collection_name}" not found.')
+        print(Fore.YELLOW + f'Collection "{collection_name}" not found. \n')
     print(Style.RESET_ALL, end='')
 
 def print_index(collection_name):
     if collection_name in mycollections:
         print(Fore.GREEN + f'Inverted Index for collection "{collection_name}":')
-        print()
         for word, indexes in inverted_indexes[collection_name].items():
                 print(f'"{word}":')
                 for elem in indexes:
@@ -50,15 +50,24 @@ def print_index(collection_name):
     print(Style.RESET_ALL, end='')
 
 def search_lite(collection_name, param):
-    print('List of available documents:', *mycollections[collection_name])
+    if collection_name in mycollections:
+        print('List of available documents:', *mycollections[collection_name])
+        print()
+    else:
+        print(Fore.YELLOW + f'Collection "{collection_name}" not found.\n')
     print(Style.RESET_ALL, end='')
 
 def search(collection_name, param):
-    print(param)
+    pattern = r'\bwhere\s(\w+$|\w+\*$|(\w+)\s<(\d+)>\s(\w+)$)'
+    if re.search(pattern, param):
+        print(param.split())
+        
+    else:
+        print(Fore.YELLOW + f'SyntaxError')
     print(Style.RESET_ALL, end='')
 
 def show():
     for keys, items in mycollections.items():
         print(f'Collection "{keys}":')
         for i, d in enumerate(items):
-            print(f'doc{i}: "{d}"')
+            print(f'doc{i+1}: "{d}"')

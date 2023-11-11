@@ -40,7 +40,6 @@ def read():
 
     return command.lower() if command.lower() in commands else f'Command "{command}" is not defined', coll_name, param
     
-
 def invalid_syntax():
     print(Fore.RED + 'Invalid syntax')
     print(Style.RESET_ALL, end='')
