@@ -49,6 +49,16 @@ def print_index(collection_name):
         print(Fore.YELLOW + f'Collection "{collection_name}" not found.')
     print(Style.RESET_ALL, end='')
 
-def search(collection_name, param):
+def search_lite(collection_name, param):
     print('List of available documents:', *mycollections[collection_name])
     print(Style.RESET_ALL, end='')
+
+def search(collection_name, param):
+    print(param)
+    print(Style.RESET_ALL, end='')
+
+def show():
+    for keys, items in mycollections.items():
+        print(f'Collection "{keys}":')
+        for i, d in enumerate(items):
+            print(f'doc{i}: "{d}"')

@@ -56,7 +56,7 @@ if __name__ == "__main__":
             case 'clear':
                 print('\033c')
             case 'show':
-                print(mycollections)
+                show()
             case 'create':
                 if param == '':
                     create(coll_name)
@@ -73,7 +73,10 @@ if __name__ == "__main__":
                 else:
                     invalid_syntax()
             case 'search':
-                search(coll_name, param)
+                if param != '':
+                    search(coll_name, param)
+                else:
+                    search_lite(coll_name, param)
             case _:
                 print(Fore.RED + f'{command}')
                 print(Style.RESET_ALL, end='')
