@@ -62,15 +62,16 @@ def search_lite(collection_name):
 def search_keyword(collection_name, query):
     keyword = query.split()[1]
     result = []
-    try:
-        inverted_indexes[collection_name].get(keyword)
+    if collection_name in inverted_indexes:
+        for keys, data in inverted_indexes[collection_name].items():
+            if keyword.lower() in keys.lower():
+                for item in data:
+                    result.append(f'd{item[0]}')
         print('Search result:')
-        for i in inverted_indexes[collection_name][keyword]:
-            result.append(f'd{i[0]}')
         print(*sorted(set(result)))
         print()
-    except:
-        print(Fore.YELLOW + "Collection with this name or index doesn't exist.\n")
+    else:
+        print(Fore.YELLOW + f'Collection "{collection_name}" not found.\n')
     print(Style.RESET_ALL, end='')
 
 def search_prefix(collection_name, query):
@@ -80,7 +81,6 @@ def search_prefix(collection_name, query):
         print(Fore.YELLOW + f'Collection "{collection_name}" not found.\n')
         print(Style.RESET_ALL, end='')
         return
-    
     for keys, data in inverted_indexes[collection_name].items():
         if prefix.lower() in keys.lower():
             for item in data:
