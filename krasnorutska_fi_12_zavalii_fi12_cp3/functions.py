@@ -63,9 +63,8 @@ def search_keyword(collection_name, query):
     keyword = query.split()[1]
     result = []
     if collection_name in inverted_indexes:
-        inverted_indexes[collection_name]
         for keys, data in inverted_indexes[collection_name].items():
-            if keyword.lower() in keys.lower():
+            if keyword.lower() == keys.lower():
                 for item in data:
                     result.append(f'd{item[0]}')
         print('Search result:')
