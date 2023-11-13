@@ -8,13 +8,13 @@ def build_inverted_index(collection_name, doc):
     inverted_index = {} if collection_name not in inverted_indexes else inverted_indexes[collection_name]
     unique_words = sorted(list(set(doc.split())))
     
-    doc_index = mycollections[collection_name].index(doc)
+    doc_index = len(mycollections[collection_name])
 
     for word in unique_words:
         if word in inverted_index:
-            inverted_index[word].append((doc_index+1, [index+1 for index, value in enumerate(doc.split()) if value == word]))
+            inverted_index[word].append((doc_index, [index+1 for index, value in enumerate(doc.split()) if value == word]))
         else:
-            inverted_index[word] = [(doc_index+1, [index+1 for index, value in enumerate(doc.split()) if value == word])]
+            inverted_index[word] = [(doc_index, [index+1 for index, value in enumerate(doc.split()) if value == word])]
         
     inverted_indexes[collection_name] = inverted_index
 
