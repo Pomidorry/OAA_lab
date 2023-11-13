@@ -63,6 +63,7 @@ def search_keyword(collection_name, query):
     keyword = query.split()[1]
     result = []
     if collection_name in inverted_indexes:
+        inverted_indexes[collection_name]
         for keys, data in inverted_indexes[collection_name].items():
             if keyword.lower() in keys.lower():
                 for item in data:
@@ -71,14 +72,14 @@ def search_keyword(collection_name, query):
         print(*sorted(set(result)))
         print()
     else:
-        print(Fore.YELLOW + f'Collection "{collection_name}" not found.\n')
+        print(Fore.YELLOW + f'Collection "{collection_name}" not found or empty.\n')
     print(Style.RESET_ALL, end='')
 
 def search_prefix(collection_name, query):
     prefix = query.split()[-1][:-1]
     result = []
     if collection_name not in mycollections:
-        print(Fore.YELLOW + f'Collection "{collection_name}" not found.\n')
+        print(Fore.YELLOW + f'Collection "{collection_name}" not found or empty.\n')
         print(Style.RESET_ALL, end='')
         return
     for keys, data in inverted_indexes[collection_name].items():
@@ -89,7 +90,8 @@ def search_prefix(collection_name, query):
     print()
 
 def search_by_num(collection_name, query):
-    pass
+    values = query.split()[1:]
+    print(values)
 
 def search(collection_name, query):
     pattern = re.compile(r'\bwhere\s(\w+$|\w+\*$|(\w+)\s<(\d+)>\s(\w+)$)', re.IGNORECASE)
