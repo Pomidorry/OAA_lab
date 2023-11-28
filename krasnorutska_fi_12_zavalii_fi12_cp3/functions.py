@@ -92,7 +92,7 @@ def search_prefix(collection_name, query):
     print()
 
 def search_by_num(collection_name, query):
-    pattern = re.compile(r'where (\w+) <(\d+)> (\w+)')
+    pattern = re.compile(r'where (\w+) <(\d+)> (\w+)', re.IGNORECASE)
     match = pattern.match(query)
     result = []
 
@@ -112,7 +112,7 @@ def search_by_num(collection_name, query):
                             if abs(a-b) == values[1]:
                                 result.append(f'd{i[0]}')
         print('Search result:')
-        print(*list(set(result)))
+        print(*sorted(set(result)))
         print()
     else:
         print(Fore.YELLOW + "Can't find words in documents.\n")
