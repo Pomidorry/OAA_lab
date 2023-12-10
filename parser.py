@@ -1,5 +1,6 @@
 import re
 from colorama import Fore, Style
+from functions import *
 
 commands = ['create', 'insert', 'print_index', 'search']
 
@@ -20,6 +21,10 @@ def read():
 
         if 'exit' in line:
             return 'exit', None, None
+        if 'clear' in line:
+            return 'clear', None, None
+        if 'show' in line:
+            return 'show', None, None
     
     pattern = r'(\w+)\s+(\w+)\s*([^;]*)'
     match = re.match(pattern, ''.join(read_command))
@@ -35,23 +40,6 @@ def read():
 
     return command.lower() if command.lower() in commands else f'Command "{command}" is not defined', coll_name, param
     
-    
-def create(collection_name):
-    print(Fore.GREEN + f'Collection {collection_name} has been created')
-    print(Style.RESET_ALL, end='')
-
-def insert(collection_name, param):
-    print(Fore.GREEN + f'Document has been added to {collection_name}')
-    print(Style.RESET_ALL, end='')
-
-def print_index(collection_name):
-    print(Fore.GREEN + f'Print_index function')
-    print(Style.RESET_ALL, end='')
-
-def search(collection_name, param):
-    print(Fore.GREEN + f'Search function')
-    print(Style.RESET_ALL, end='')
-
 def invalid_syntax():
     print(Fore.RED + 'Invalid syntax')
     print(Style.RESET_ALL, end='')
@@ -64,6 +52,10 @@ if __name__ == "__main__":
         match command:
             case 'exit':
                 break
+            case 'clear':
+                print('\033c')
+            case 'show':
+                show()
             case 'create':
                 if param == '':
                     create(coll_name)
@@ -83,7 +75,7 @@ if __name__ == "__main__":
                 if param != '':
                     search(coll_name, param)
                 else:
-                    invalid_syntax()
+                    search_lite(coll_name)
             case _:
                 print(Fore.RED + f'{command}')
                 print(Style.RESET_ALL, end='')
